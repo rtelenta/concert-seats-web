@@ -3,5 +3,14 @@
   "home": {
     "title": "ConcertSeats",
     "subtitle": "Find and book the best seats at live concerts"
+  },
+  "shows": {
+    "searchPlaceholder": "Search artist or show...",
+    "allCities": "All cities",
+    "allDates": "All dates",
+    "noResults": "No shows match your filters.",
+    "clearFilters": "Clear filters",
+    "detailStubTitle": "Show Details",
+    "detailStubSubtitle": "Coming soon"
   }
 }

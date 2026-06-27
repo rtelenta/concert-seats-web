@@ -1,16 +1,18 @@
-import { t } from "@/utils/t";
+"use client"
+
+import { t } from "@/utils/t"
+import { ShowGrid } from "@/features/shows/components/show-grid"
 
 export function HomePage() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-6 p-8">
-      <div className="flex flex-col items-center gap-3 text-center">
-        <h1 className="text-5xl font-bold tracking-tight text-foreground">
+    <main className="flex flex-col gap-8 px-6 py-8 md:px-10">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {t("home.title")}
         </h1>
-        <p className="max-w-md text-lg text-muted-foreground">
-          {t("home.subtitle")}
-        </p>
+        <p className="text-muted-foreground">{t("home.subtitle")}</p>
       </div>
+      <ShowGrid />
     </main>
-  );
+  )
 }
