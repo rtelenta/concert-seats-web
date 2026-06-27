@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchShows } from "@/features/shows/api/fetch-shows"
+import { fetchShows } from "@/features/shows/api/fetchShows"
 
 export function useShows() {
   return useQuery({

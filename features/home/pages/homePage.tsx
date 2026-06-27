@@ -1,7 +1,7 @@
 "use client"
 
 import { t } from "@/utils/t"
-import { ShowGrid } from "@/features/shows/components/show-grid"
+import { ShowGrid } from "@/features/shows/components/showGrid"
 
 export function HomePage() {
   return (

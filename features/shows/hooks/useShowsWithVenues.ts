@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import { useShows } from "@/features/shows/hooks/use-shows"
-import { useVenues } from "@/features/shows/hooks/use-venues"
+import { useShows } from "@/features/shows/hooks/useShows"
+import { useVenues } from "@/features/shows/hooks/useVenues"
 import type { ShowWithVenue } from "@/features/shows/types"
 
 export function useShowsWithVenues(): {

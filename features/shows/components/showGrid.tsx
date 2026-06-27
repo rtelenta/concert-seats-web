@@ -2,9 +2,9 @@
 
 import { Suspense, useMemo } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
-import { useShowsWithVenues } from "@/features/shows/hooks/use-shows-with-venues"
-import { ShowCard } from "@/features/shows/components/show-card"
-import { ShowFilters } from "@/features/shows/components/show-filters"
+import { useShowsWithVenues } from "@/features/shows/hooks/useShowsWithVenues"
+import { ShowCard } from "@/features/shows/components/showCard"
+import { ShowFilters } from "@/features/shows/components/showFilters"
 import { t } from "@/utils/t"
 
 function ShowGridInner() {
