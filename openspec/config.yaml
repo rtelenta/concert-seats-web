@@ -1,0 +1,91 @@
+schema: spec-driven
+
+context: |
+  ## Project
+  ConcertSeats — a concert seat-reservation web app. This repo is the frontend
+  only; it talks to a NestJS microservices backend exclusively through an HTTP
+  API gateway. The frontend never touches a database and does not manage auth.
+
+  ## Auth
+  Clerk handles all authentication. The frontend uses Clerk's SDK and
+  pre-built components where possible. Never implement custom auth flows — if
+  Clerk supports it, use Clerk's way.
+
+  ## Backend communication
+  All data calls go to the NestJS API gateway over HTTP. There is no BFF layer
+  in this Next.js project — no /api/* route handlers that proxy or aggregate
+  backend calls. The gateway URL comes from an env var.
+
+  ## Tech stack
+  - Runtime / package manager: Bun
+  - Framework: Next.js 16 (App Router) + React 19
+  - Auth: Clerk (@clerk/nextjs)
+  - Styling: Tailwind CSS v4 + shadcn/ui
+  - Data fetching: TanStack Query (React Query) — all client-side API calls
+  - Forms: react-hook-form + zod (zod schema is the single source of truth)
+  - Language: TypeScript strict mode — no `any`, prefer `unknown` + narrowing
+
+  ## Architecture conventions
+  - Server Components by default; `"use client"` only when interactivity requires it
+  - `app/` folder is routing-only. Every page file is a thin shell:
+    ```ts
+    // app/some-route/page.tsx
+    export default function SomePage() {
+      return <SomeFeaturePage />;
+    }
+    ```
+  - All real logic lives in `features/<domain>/`
+  - Named exports everywhere; no default exports except Next.js page components
+  - No barrel `index.ts` files unless the module is a public API boundary
+
+  ## Folder structure
+  Generic shared code (no business logic):
+  - `components/` — reusable UI components
+  - `hooks/` — reusable hooks
+  - `utils/` — reusable utilities
+
+  Business logic lives in `features/<domain>/`:
+  - `features/<domain>/components/` — components tied to that domain
+  - `features/<domain>/hooks/` — hooks tied to that domain
+  - `features/<domain>/utils/` — utilities tied to that domain
+  - `features/<domain>/pages/` — page-level components for that domain
+
+  ## Code style
+  - Functional components only, no class components
+  - Never access `process.env` directly — re-export all env vars from `lib/constants.ts`
+  - All client-side data fetching via TanStack Query — no raw `fetch` in components
+  - All forms use react-hook-form; define the zod schema first, derive the form type from it
+  - Use shadcn/ui components as the base for all UI — do not hand-roll primitives shadcn provides
+  - No comments unless the WHY is non-obvious
+  - No hardcoded UI text strings — all text goes in `locales/en.json` and is accessed via the `t()` util:
+    ```ts
+    t("shows.title")       // → "Upcoming Shows"
+    t("booking.confirm")   // → "Confirm your booking"
+    ```
+    `locales/en.json` is the single source of truth for all copy. The project is English-only;
+    the locale file exists for maintainability, not multi-language support.
+
+rules:
+  proposal:
+    - Always include a "Non-goals" section to keep scope tight
+    - Identify whether the change touches UI only, or also requires new API
+      endpoints from the gateway (call out the expected endpoint contract)
+    - Note any Clerk-specific concerns (protected routes, user metadata, webhooks)
+    - Note any new environment variables required (e.g. NEXT_PUBLIC_API_URL)
+    - Keep proposals under 400 words
+  design:
+    - Show the component tree or page/layout involved for any UI changes
+    - For any data-fetching change, show the TanStack Query key and the
+      gateway endpoint it calls (method + path + expected response shape)
+    - For any form, show the zod schema shape first
+    - For any Clerk integration, describe which Clerk SDK method or component
+      is used — do not invent a custom auth solution
+  tasks:
+    - Keep tasks small and single-concern: one component, one hook, one route, etc.
+    - Order tasks so the app stays runnable after each one
+    - Tasks that add env vars must include updating `.env.example`
+    - Never mix data-fetching logic with UI component work in the same task
+    - Implement the happy path first; add loading states, error handling, and
+      empty states as separate later tasks
+    - End every change with a verification task that proves the flow works in
+      the running app (e.g. "sign in with Clerk and confirm the seat map renders")
