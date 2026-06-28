@@ -1,5 +1,4 @@
 {
-  "hello": "hello world",
   "home": {
     "title": "ConcertSeats",
     "subtitle": "Find and book the best seats at live concerts"
@@ -19,7 +18,13 @@
     },
     "seats": {
       "comingSoon": "Seat selection coming soon",
-      "backToShow": "Back to Show"
+      "backToShow": "Back to Show",
+      "loading": "Loading seats...",
+      "error": "Failed to load seats. Please try again.",
+      "section": "Section",
+      "row": "Row",
+      "selected": "seat(s) selected",
+      "total": "Total"
     }
   }
 }

@@ -17,3 +17,18 @@ export type Venue = {
 }
 
 export type ShowWithVenue = Show & { venue: Venue | null }
+
+export type Seat = {
+  seatId: string
+  showId: string
+  seatDefinitionId: string
+  section: string
+  row: string
+  number: number
+  price: number
+  status: "AVAILABLE" | "HELD" | "SOLD"
+  heldBy: string | null
+  heldUntil: string | null
+  version: number
+  createdAt: string
+}
