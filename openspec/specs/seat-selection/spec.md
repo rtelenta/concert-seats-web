@@ -62,3 +62,18 @@ The seats page SHALL display a back link that navigates the user back to `/shows
 #### Scenario: Back link navigates to show detail
 - **WHEN** the user clicks the back link
 - **THEN** the browser navigates to `/shows/[id]`
+
+### Requirement: Seats page requires authentication
+The seats page at `/shows/[id]/seats` SHALL be accessible only to authenticated users. Unauthenticated users SHALL be redirected to the Clerk sign-in flow and returned to the original URL after signing in. The redirect SHALL prevent the page from rendering (no 200 response for unauthenticated requests).
+
+#### Scenario: Unauthenticated user is redirected
+- **WHEN** an unauthenticated user navigates to `/shows/[id]/seats`
+- **THEN** they are redirected to the Clerk sign-in page
+
+#### Scenario: After sign-in, user is returned to the seats page
+- **WHEN** an unauthenticated user is redirected to sign-in and then signs in successfully
+- **THEN** they are redirected back to the original `/shows/[id]/seats` URL
+
+#### Scenario: Authenticated user can access the page
+- **WHEN** a signed-in user navigates to `/shows/[id]/seats`
+- **THEN** the seats page renders normally with no redirect
