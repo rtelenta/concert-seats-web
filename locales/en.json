@@ -11,6 +11,15 @@
     "noResults": "No shows match your filters.",
     "clearFilters": "Clear filters",
     "detailStubTitle": "Show Details",
-    "detailStubSubtitle": "Coming soon"
+    "detailStubSubtitle": "Coming soon",
+    "detail": {
+      "backToShows": "Back to Shows",
+      "selectSeats": "Select Seats",
+      "status": "Status"
+    },
+    "seats": {
+      "comingSoon": "Seat selection coming soon",
+      "backToShow": "Back to Show"
+    }
   }
 }
