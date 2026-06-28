@@ -1,6 +1,12 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 
-export default clerkMiddleware();
+const isSeatsRoute = createRouteMatcher(["/shows/(.*)/seats(.*)"])
+
+export default clerkMiddleware(async (auth, req) => {
+  if (isSeatsRoute(req)) {
+    await auth.protect()
+  }
+})
 
 export const config = {
   matcher: [
@@ -8,4 +14,4 @@ export const config = {
     "/(api|trpc)(.*)",
     "/__clerk/:path*",
   ],
-};
+}
