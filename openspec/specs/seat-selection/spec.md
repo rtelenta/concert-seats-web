@@ -46,7 +46,7 @@ Clicking an available seat tile SHALL toggle its selected state. Selected seats 
 - **THEN** nothing happens (no state change)
 
 ### Requirement: Selected seats summary is displayed
-The page SHALL display a persistent summary showing the count of selected seats and the total price.
+The page SHALL display a persistent summary bar showing the count of selected seats, the total price, and a "Hold Seats" button. The button SHALL be disabled when no seats are selected or when a hold request is in progress. When the hold mutation succeeds or fails, the summary bar SHALL reflect the resulting state.
 
 #### Scenario: Summary updates on selection
 - **WHEN** the user selects or deselects seats
@@ -54,7 +54,15 @@ The page SHALL display a persistent summary showing the count of selected seats 
 
 #### Scenario: No seats selected
 - **WHEN** no seats are selected
-- **THEN** the summary shows 0 seats and $0 total
+- **THEN** the summary shows 0 seats and $0 total, and the "Hold Seats" button is disabled
+
+#### Scenario: Hold request in progress
+- **WHEN** the user clicks "Hold Seats" and the request is in flight
+- **THEN** the "Hold Seats" button shows a loading indicator and is disabled
+
+#### Scenario: Hold request fails
+- **WHEN** the backend returns an error for the hold request
+- **THEN** an error message is shown in the summary bar and the button returns to its clickable state
 
 ### Requirement: Seats page has a back link to the show detail page
 The seats page SHALL display a back link that navigates the user back to `/shows/[id]`.
