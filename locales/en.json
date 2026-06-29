@@ -24,7 +24,13 @@
       "section": "Section",
       "row": "Row",
       "selected": "seat(s) selected",
-      "total": "Total"
+      "total": "Total",
+      "holdSeats": "Hold Seats",
+      "holding": "Holding..."
     }
+  },
+  "errors": {
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "holdFailed": "Failed to hold seats. Please try again."
   }
 }

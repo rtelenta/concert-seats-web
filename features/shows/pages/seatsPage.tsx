@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react"
 import Link from "next/link"
 import { useSeats } from "@/features/shows/hooks/useSeats"
+import { useHoldSeats } from "@/features/shows/hooks/useHoldSeats"
 import { SeatGrid } from "@/features/shows/components/seatGrid"
 import { t } from "@/utils/t"
 
@@ -12,6 +13,7 @@ interface SeatsPageProps {
 
 export function SeatsPage({ id }: SeatsPageProps) {
   const { data: seats, isLoading, isError } = useSeats(id)
+  const holdMutation = useHoldSeats()
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   const handleToggle = useCallback((seatId: string) => {
@@ -64,13 +66,31 @@ export function SeatsPage({ id }: SeatsPageProps) {
 
       {selectedIds.size > 0 && (
         <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-          <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4">
-            <span className="text-sm text-muted-foreground">
-              {selectedIds.size} {t("shows.seats.selected")}
-            </span>
-            <span className="font-semibold">
-              {t("shows.seats.total")}: ${total}
-            </span>
+          <div className="mx-auto max-w-3xl px-4 py-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">
+                {selectedIds.size} {t("shows.seats.selected")}
+              </span>
+              <div className="flex items-center gap-4">
+                <span className="font-semibold">
+                  {t("shows.seats.total")}: ${total}
+                </span>
+                <button
+                  onClick={() =>
+                    holdMutation.mutate({ showId: id, seatIds: Array.from(selectedIds) })
+                  }
+                  disabled={holdMutation.isPending}
+                  className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {holdMutation.isPending ? t("shows.seats.holding") : t("shows.seats.holdSeats")}
+                </button>
+              </div>
+            </div>
+            {holdMutation.isError && (
+              <p className="mt-2 text-sm text-destructive">
+                {holdMutation.error?.message}
+              </p>
+            )}
           </div>
         </div>
       )}
